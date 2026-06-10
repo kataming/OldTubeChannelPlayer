@@ -248,6 +248,13 @@ python tools/verify_youtube_api.py "https://www.youtube.com/@ハンドル"
 
 - [`docs/manual-test-checklist.md`](docs/manual-test-checklist.md) — **Mac/実機での実画面確認チェックリスト**（MVP+全機能）
 - [`docs/app-store-preparation.md`](docs/app-store-preparation.md) — **公開準備の地図**（現在の名称/ID、加入後の差し替え場所、本番Config、誤push防止）
+- [`docs/privacy-policy.md`](docs/privacy-policy.md) — **プライバシーポリシー（公開用）**
+- [`docs/app-store-description.md`](docs/app-store-description.md) — **App Store 説明文**（時系列視聴・進捗管理・学習補助として表現／日英）
+- [`docs/screenshot-copy.md`](docs/screenshot-copy.md) — **スクリーンショット用キャプション文言**
+- [`docs/testflight-checklist.md`](docs/testflight-checklist.md) — **TestFlight 実機確認チェックリスト**
+- [`docs/youtube-api-key-production-settings.md`](docs/youtube-api-key-production-settings.md) — **APIキー本番制限**（iOS Bundle ID 制限・YouTube Data API v3 制限）
+
+参考（初期ドラフト）:
 - [`docs/AppStore/README.md`](docs/AppStore/README.md) — 索引・プライバシーポリシーURLの設定場所
 - [`docs/AppStore/app-description.md`](docs/AppStore/app-description.md) — App Store 説明文の下書き（日本語/英語）
 - [`docs/AppStore/review-notes.md`](docs/AppStore/review-notes.md) — 審査向けメモ（公式プレイヤー使用・禁止実装なしの説明）
