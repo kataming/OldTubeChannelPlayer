@@ -4,9 +4,18 @@ struct PlayerView: View {
     // 視聴済み状態の変化で再描画するため EnvironmentObject でも観測する。
     @EnvironmentObject private var watchStore: WatchHistoryStore
     @EnvironmentObject private var progressStore: ChannelProgressStore
+    @EnvironmentObject private var memoStore: VideoMemoStore
     @StateObject private var viewModel: PlayerViewModel
     @Environment(\.openURL) private var openURL
     private let channelId: String
+
+    /// 動画ごとのメモを直接読み書きする Binding（入力即保存・日本語OK）。
+    private func memoBinding(for videoId: String) -> Binding<String> {
+        Binding(
+            get: { memoStore.memo(for: videoId) },
+            set: { memoStore.setMemo($0, for: videoId) }
+        )
+    }
 
     init(videos: [VideoItem], startIndex: Int, watchStore: WatchHistoryStore, channelId: String) {
         self.channelId = channelId
@@ -62,6 +71,8 @@ struct PlayerView: View {
 
             controls(for: video)
 
+            memoSection(for: video)
+
             if !video.description.isEmpty {
                 Divider()
                 Text(video.description)
@@ -70,6 +81,25 @@ struct PlayerView: View {
             }
         }
         .padding()
+    }
+
+    @ViewBuilder
+    private func memoSection(for video: VideoItem) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Label("メモ（シリーズ視聴・学習用）", systemImage: "note.text")
+                .font(.subheadline.bold())
+            TextEditor(text: memoBinding(for: video.id))
+                .frame(minHeight: 80)
+                .padding(6)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color(.separator))
+                )
+                .scrollContentBackground(.hidden)
+            Text("入力すると自動保存されます。")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+        }
     }
 
     private func endedSuggestion(_ next: VideoItem) -> some View {
