@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>公式埋め込みプレイヤー 動作確認</title>
+<style>
+  body { font-family: -apple-system, system-ui, sans-serif; margin: 16px; background:#111; color:#eee; }
+  #player { width: 100%; max-width: 640px; aspect-ratio: 16/9; background:#000; }
+  .row { margin: 10px 0; }
+  input { padding:6px; width: 260px; }
+  button { padding:6px 12px; margin-right:6px; cursor:pointer; }
+  #log { background:#000; border:1px solid #333; padding:10px; height:160px; overflow:auto;
+         font-family: monospace; font-size:12px; white-space:pre-wrap; max-width:640px; }
+  .note { color:#aaa; font-size:13px; max-width:640px; }
+</style>
+</head>
+<body>
+  <h2>公式埋め込みプレイヤー（YouTube IFrame Player）動作確認</h2>
+  <p class="note">
+    これはアプリ内 <code>YouTubePlayerWebView</code> と同じ「YouTube公式 IFrame Player」をブラウザで再現したものです。
+    再生できること、状態イベント（特に <b>ended</b>）が拾えることを確認できます。APIキーは不要です。
+  </p>
+
+  <div class="row">
+    <label>videoId: <input id="vid" value="aqz-KE-bpKQ"/></label>
+    <button onclick="cue()">読込(cue)</button>
+    <button onclick="load()">読込+再生(load)</button>
+    <button onclick="player&&player.playVideo()">再生</button>
+    <button onclick="player&&player.pauseVideo()">一時停止</button>
+  </div>
+
+  <div id="player"></div>
+
+  <div class="row"><b>イベントログ:</b></div>
+  <div id="log"></div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    var player;
+    var STATE = {'-1':'未開始','0':'終了(ended)','1':'再生中','2':'一時停止','3':'バッファ','5':'頭出し(cued)'};
+    function log(msg){
+      var el = document.getElementById('log');
+      var t = new Date().toLocaleTimeString();
+      el.textContent += '[' + t + '] ' + msg + '\n';
+      el.scrollTop = el.scrollHeight;
+    }
+    function onYouTubeIframeAPIReady(){
+      player = new YT.Player('player', {
+        width:'100%', height:'100%',
+        videoId: document.getElementById('vid').value,
+        playerVars: { playsinline:1, rel:0, modestbranding:1 },
+        events: {
+          'onReady': function(){ log('onReady: プレイヤー準備完了'); },
+          'onStateChange': function(e){
+            log('onStateChange: ' + e.data + ' (' + (STATE[e.data]||'?') + ')');
+            if (e.data === 0) log('★ ended イベント検知（アプリはここで「次の動画」を提示）');
+          },
+          'onError': function(e){ log('onError: ' + e.data); }
+        }
+      });
+    }
+    function cue(){ player && player.cueVideoById(document.getElementById('vid').value); }
+    function load(){ player && player.loadVideoById(document.getElementById('vid').value); }
+  </script>
+</body>
+</html>

@@ -198,6 +198,33 @@ ChannelTimelineViewer/
 
 ---
 
+## 動作確認（ビルド以外・Mac なしでも可）
+
+ビルド成功に加えて「YouTube API で動画一覧が取れるか」「公式埋め込みプレイヤーで再生できるか」を確認する手段です。
+
+### A. 公式プレイヤーの再生確認（APIキー不要・ブラウザ）
+[`tools/player-test.html`](tools/player-test.html) をブラウザで開く → 動画が再生され、状態イベント（特に
+`ended`）がログに出れば、アプリ内 `YouTubePlayerWebView` と同じ公式 IFrame Player の仕組みが動作しています。
+
+### B. 動画一覧取得の確認（ローカル・要 APIキー）
+アプリ本体と同じ流れ（チャンネル解決 → uploads → 全ページ取得 → 古い順ソート）を Python で確認します。
+
+```bash
+# キーは Resources/Config.plist か環境変数 YOUTUBE_API_KEY で渡す（コマンドラインに直書きしない）
+python tools/verify_youtube_api.py "https://www.youtube.com/@ハンドル"
+```
+→ 取得本数・最も古い5本/新しい5本・古い順ソートOK が表示されれば、API 取得ロジックは妥当です。
+
+### C. 本体(Swift)を実APIで検証（CI・要 GitHub Secret）
+実際の `YouTubeAPIClient` を本物の API に当てる統合テスト（[`Tests/YouTubeAPIIntegrationTests.swift`](Tests/YouTubeAPIIntegrationTests.swift)）。
+
+1. YouTube Data API v3 のキーを用意（取得方法は上記参照）
+2. GitHub リポジトリ → Settings → Secrets and variables → Actions → **New repository secret**
+   - Name: `YOUTUBE_API_KEY` / Value: 実際のキー
+3. push すると CI が実 API に当ててチャンネル解決・動画取得を検証（Secret 未登録ならスキップ＝通常は緑のまま）
+
+> いずれも実機/シミュレーターでの UI 操作確認の代替です。実アプリの画面操作確認は Mac/Xcode が必要です。
+
 ## App Store 提出準備
 
 提出を見据えた資料を [`docs/AppStore/`](docs/AppStore/) にまとめています。
