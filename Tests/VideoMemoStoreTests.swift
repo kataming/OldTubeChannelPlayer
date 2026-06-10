@@ -27,6 +27,13 @@ final class VideoMemoStoreTests: XCTestCase {
         XCTAssertFalse(store.hasMemo(for: "v2"))
     }
 
+    func testUpdateExistingMemo() {
+        let store = VideoMemoStore(defaults: makeDefaults())
+        store.setMemo("初版メモ", for: "v1")
+        store.setMemo("更新したメモ", for: "v1")   // 上書き更新
+        XCTAssertEqual(store.memo(for: "v1"), "更新したメモ")
+    }
+
     func testJapaneseInputPreserved() {
         let store = VideoMemoStore(defaults: makeDefaults())
         let text = "第3回までに復習。アファメーション→行動エネルギー。"

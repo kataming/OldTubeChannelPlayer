@@ -37,6 +37,13 @@ final class ChannelProgressStoreTests: XCTestCase {
         XCTAssertNotNil(store.progress(for: "C1")?.lastOpenedAt)
     }
 
+    func testRecordLastOpenedAtSaved() {
+        let store = ChannelProgressStore(defaults: makeDefaults())
+        let date = Date(timeIntervalSince1970: 12345)
+        store.recordOpened(channelId: "C1", videoId: "v", at: date)
+        XCTAssertEqual(store.progress(for: "C1")?.lastOpenedAt, date)
+    }
+
     func testUpdateCountsKeepsLastOpened() {
         let store = ChannelProgressStore(defaults: makeDefaults())
         store.recordOpened(channelId: "C1", videoId: "vidA")
