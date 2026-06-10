@@ -1,4 +1,4 @@
-name: OldTubeChannelPlayer
+name: ChannelTimelineViewer
 
 options:
   bundleIdPrefix: com.example
@@ -14,7 +14,7 @@ settings:
     DEVELOPMENT_TEAM: ""
 
 targets:
-  OldTubeChannelPlayer:
+  ChannelTimelineViewer:
     type: application
     platform: iOS
     sources:
@@ -30,9 +30,6 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         # ↓ App Store 提出時は com.example を自分の Apple Developer の逆ドメインに置き換える
         PRODUCT_BUNDLE_IDENTIFIER: com.example.channeltimelineviewer
-        # 製品名(.app名)は安全な名称に。モジュール名は据え置き(コード/CI 不変)。
-        PRODUCT_NAME: ChannelTimelineViewer
-        PRODUCT_MODULE_NAME: OldTubeChannelPlayer
         TARGETED_DEVICE_FAMILY: "1"          # iPhone のみ
         INFOPLIST_KEY_CFBundleDisplayName: "Channel Timeline Viewer"
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
@@ -40,28 +37,24 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
 
-  OldTubeChannelPlayerTests:
+  ChannelTimelineViewerTests:
     type: bundle.unit-test
     platform: iOS
     sources:
       - Tests
     dependencies:
-      - target: OldTubeChannelPlayer
+      - target: ChannelTimelineViewer
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: com.example.channeltimelineviewer.tests
-        # ホストアプリの PRODUCT_NAME を ChannelTimelineViewer に変更したため
-        # TEST_HOST/BUNDLE_LOADER を実際の .app/実行ファイル名に合わせて明示する。
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/ChannelTimelineViewer.app/ChannelTimelineViewer"
-        BUNDLE_LOADER: "$(TEST_HOST)"
 
 schemes:
-  OldTubeChannelPlayer:
+  ChannelTimelineViewer:
     build:
       targets:
-        OldTubeChannelPlayer: all
-        OldTubeChannelPlayerTests: [test]
+        ChannelTimelineViewer: all
+        ChannelTimelineViewerTests: [test]
     test:
       targets:
-        - OldTubeChannelPlayerTests
+        - ChannelTimelineViewerTests

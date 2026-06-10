@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct OldTubeChannelPlayerApp: App {
+struct ChannelTimelineViewerApp: App {
     // アプリ全体で共有するローカルストア。
     @StateObject private var watchHistoryStore = WatchHistoryStore()
     @StateObject private var favoriteStore = FavoriteChannelStore()

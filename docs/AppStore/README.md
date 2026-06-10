@@ -1,7 +1,7 @@
 # App Store 提出準備 — 索引
 
 このフォルダは **Channel Timeline Viewer** を App Store に提出するための資料です。
-（内部のプロジェクト/リポジトリ名は `OldTubeChannelPlayer` のまま。表示名・Bundle ID は安全な名称に変更済み。）
+（プロジェクト名・ターゲット/モジュール名・表示名・Bundle ID をすべて `Channel Timeline Viewer` 系に統一済み。）
 
 ## ファイル
 

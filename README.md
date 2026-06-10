@@ -3,8 +3,8 @@
 チャンネルの投稿動画を **公開日順（古い順）** に整理し、公式の埋め込みプレイヤーで
 順番に視聴しやすくする iPhone 向けの **視聴補助アプリ**です。YouTube の代替アプリではありません。
 
-> 内部のプロジェクト/モジュール名・GitHub リポジトリ名は開発上の都合で `OldTubeChannelPlayer` のままですが、
-> アプリの表示名・製品名・Bundle ID は `Channel Timeline Viewer` 系に変更済みです（App Store に見える名称は安全側）。
+> プロジェクト名・ターゲット/モジュール名・表示名・製品名・Bundle ID をすべて `Channel Timeline Viewer`
+> 系に統一しています。
 
 ## ⚠️ 重要な注意事項（ディスクレーマー）
 
@@ -90,22 +90,22 @@ cp Resources/Config.example.plist Resources/Config.plist
 xcodegen generate
 
 # 2) Xcode で開く
-open OldTubeChannelPlayer.xcodeproj
+open ChannelTimelineViewer.xcodeproj
 
-# 3) ターゲット OldTubeChannelPlayer を実機/シミュレータで実行（Cmd+R）
+# 3) ターゲット ChannelTimelineViewer を実機/シミュレータで実行（Cmd+R）
 #    テスト実行は Cmd+U
 ```
 
 コマンドラインからのビルド例:
 
 ```bash
-xcodebuild -project OldTubeChannelPlayer.xcodeproj \
-  -scheme OldTubeChannelPlayer \
+xcodebuild -project ChannelTimelineViewer.xcodeproj \
+  -scheme ChannelTimelineViewer \
   -destination 'platform=iOS Simulator,name=iPhone 15' build
 
 # テスト
-xcodebuild -project OldTubeChannelPlayer.xcodeproj \
-  -scheme OldTubeChannelPlayer \
+xcodebuild -project ChannelTimelineViewer.xcodeproj \
+  -scheme ChannelTimelineViewer \
   -destination 'platform=iOS Simulator,name=iPhone 15' test
 ```
 
@@ -127,7 +127,7 @@ xcodebuild -project OldTubeChannelPlayer.xcodeproj \
 使い方:
 
 ```bash
-# このフォルダ(OldTubeChannelPlayer)を GitHub リポジトリのルートとして push する
+# このフォルダ(ChannelTimelineViewer)を GitHub リポジトリのルートとして push する
 git init
 git add .
 git commit -m "Initial commit"
@@ -151,8 +151,8 @@ git push -u origin main
 ## ディレクトリ構成
 
 ```
-OldTubeChannelPlayer/
-  App/        OldTubeChannelPlayerApp.swift
+ChannelTimelineViewer/
+  App/        ChannelTimelineViewerApp.swift
   Models/     Channel.swift / VideoItem.swift / WatchHistory.swift
   Services/   ConfigLoader / YouTubeAPIError / ChannelResolver /
               YouTubeAPIClient / WatchHistoryStore / FavoriteChannelStore

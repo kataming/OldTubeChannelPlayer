@@ -15,8 +15,8 @@ jobs:
     runs-on: macos-14   # Xcode 15.x / iOS 17 SDK を含む macOS ランナー
 
     env:
-      PROJECT: OldTubeChannelPlayer.xcodeproj
-      SCHEME: OldTubeChannelPlayer
+      PROJECT: ChannelTimelineViewer.xcodeproj
+      SCHEME: ChannelTimelineViewer
 
     steps:
       - name: Checkout

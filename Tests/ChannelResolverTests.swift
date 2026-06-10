@@ -1,5 +1,5 @@
 import XCTest
-@testable import OldTubeChannelPlayer
+@testable import ChannelTimelineViewer
 
 final class ChannelResolverTests: XCTestCase {
 
