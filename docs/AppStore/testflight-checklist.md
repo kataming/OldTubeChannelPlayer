@@ -11,8 +11,12 @@
 
 ## 表示・名称
 - [ ] 表示名が `Channel Timeline Viewer`（YouTube/Tube を連想させない）
-- [ ] アイコンを設定した（YouTube ロゴ等の商標を使っていない）
+- [ ] **アプリアイコンの実画像を追加した**（`Resources/Assets.xcassets/AppIcon.appiconset/` に 1024×1024 PNG。
+      `Contents.json` の `"filename"` に画像名を設定。YouTube ロゴ等の商標を使わないオリジナル）
 - [ ] スクリーンショットに公式ロゴの不正使用や「公式」と誤認させる表現がない
+
+## プライバシーマニフェスト（必須・追加済み）
+- [ ] `Resources/PrivacyInfo.xcprivacy` がビルドに含まれている（トラッキングなし/収集なし/UserDefaults理由CA92.1を申告済み）
 
 ## 機能・設定
 - [ ] `Resources/Config.plist` に**有効な** `YOUTUBE_API_KEY` を設定した（提出ビルドに含む）

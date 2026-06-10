@@ -31,6 +31,9 @@ targets:
         # ↓ App Store 提出時は com.example を自分の Apple Developer の逆ドメインに置き換える
         PRODUCT_BUNDLE_IDENTIFIER: com.example.channeltimelineviewer
         TARGETED_DEVICE_FAMILY: "1"          # iPhone のみ
+        # アセットカタログ(Resources/Assets.xcassets)のアイコン/アクセントカラーを使用
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         INFOPLIST_KEY_CFBundleDisplayName: "Channel Timeline Viewer"
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
