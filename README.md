@@ -92,22 +92,29 @@ xcodegen generate
 # 2) Xcode で開く
 open ChannelTimelineViewer.xcodeproj
 
-# 3) ターゲット ChannelTimelineViewer を実機/シミュレータで実行（Cmd+R）
+# 3) ターゲット ChannelTimelineViewer をシミュレータで実行（Cmd+R）
 #    テスト実行は Cmd+U
+#    ※ シミュレータなら Apple Developer 登録・署名は不要（実機実行のみ署名が要る）
 ```
 
-コマンドラインからのビルド例:
+コマンドラインからのビルド例（署名なし・シミュレーター向け）:
 
 ```bash
+# ビルド（コンパイル確認）
 xcodebuild -project ChannelTimelineViewer.xcodeproj \
   -scheme ChannelTimelineViewer \
-  -destination 'platform=iOS Simulator,name=iPhone 15' build
+  -destination 'generic/platform=iOS Simulator' \
+  CODE_SIGNING_ALLOWED=NO build
 
 # テスト
 xcodebuild -project ChannelTimelineViewer.xcodeproj \
   -scheme ChannelTimelineViewer \
-  -destination 'platform=iOS Simulator,name=iPhone 15' test
+  -destination 'platform=iOS Simulator,name=iPhone 15' \
+  CODE_SIGNING_ALLOWED=NO test
 ```
+
+> App Store 提出に必要な署名・Bundle ID・Team ID は **まだ設定していません**。Apple Developer Program
+> 加入後に `project.yml` の `DEVELOPMENT_TEAM` と `PRODUCT_BUNDLE_IDENTIFIER` を差し替えて移行します。
 
 ---
 

@@ -11,6 +11,11 @@ settings:
     SWIFT_VERSION: "5.0"
     MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
+    # === 現状はシミュレーター/CIビルド専用（署名なし）。App Store提出設定はまだ入れない ===
+    # Apple Developer Program 加入後に、ここを差し替えるだけで提出準備に移行できる:
+    #   DEVELOPMENT_TEAM        : 自分のTeam ID(10桁)に変更
+    #   PRODUCT_BUNDLE_IDENTIFIER: 下のターゲット設定で com.example を自分の逆ドメインに変更
+    # それまでは DEVELOPMENT_TEAM は空、署名は CODE_SIGNING_ALLOWED=NO(CI)で回避する。
     DEVELOPMENT_TEAM: ""
 
 targets:
