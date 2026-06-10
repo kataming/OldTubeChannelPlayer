@@ -15,11 +15,19 @@ struct VideoListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Picker("並び替え", selection: $viewModel.sortAscending) {
-                        Text("古い順").tag(true)
-                        Text("新しい順").tag(false)
+                    Menu {
+                        Picker("並び替え", selection: $viewModel.sortAscending) {
+                            Text("古い順").tag(true)
+                            Text("新しい順").tag(false)
+                        }
+                        Picker("表示", selection: $viewModel.watchFilter) {
+                            ForEach(WatchFilter.allCases) { f in
+                                Text(f.rawValue).tag(f)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle")
                     }
-                    .pickerStyle(.segmented)
                 }
             }
             .task {
@@ -59,22 +67,77 @@ struct VideoListView: View {
         }
     }
 
+    private var visible: [VideoItem] {
+        viewModel.visibleVideos(isWatched: watchStore.isWatched)
+    }
+    private var totalCount: Int { viewModel.videos.count }
+    private var watchedCount: Int {
+        watchStore.watchedVideoCount(in: viewModel.videos.map(\.id))
+    }
+
     private var list: some View {
         List {
             Section {
-                let videos = viewModel.displayedVideos
-                ForEach(Array(videos.enumerated()), id: \.element.id) { index, video in
+                progressHeader
+                nextToWatchRow
+            }
+
+            Section {
+                ForEach(Array(visible.enumerated()), id: \.element.id) { index, video in
                     NavigationLink {
-                        PlayerView(videos: videos, startIndex: index, watchStore: watchStore)
+                        PlayerView(videos: visible, startIndex: index, watchStore: watchStore)
                     } label: {
                         VideoRow(video: video, watched: watchStore.isWatched(video.id))
                     }
                 }
             } header: {
-                Text("\(viewModel.count)本")
+                Text("\(visible.count)本表示 / 全\(totalCount)本")
             }
         }
         .listStyle(.plain)
+    }
+
+    @ViewBuilder
+    private var progressHeader: some View {
+        if totalCount > 0 {
+            let rate = Double(watchedCount) / Double(totalCount)
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("進捗").font(.subheadline.bold())
+                    Spacer()
+                    Text("\(watchedCount) / \(totalCount)本（\(Int((rate * 100).rounded()))%）")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+                ProgressView(value: rate).tint(.green)
+            }
+            .padding(.vertical, 2)
+        }
+    }
+
+    @ViewBuilder
+    private var nextToWatchRow: some View {
+        if let next = viewModel.nextUnwatched(isWatched: watchStore.isWatched),
+           let pos = viewModel.nextUnwatchedPosition(isWatched: watchStore.isWatched) {
+            let oldest = viewModel.oldestFirst()
+            NavigationLink {
+                PlayerView(videos: oldest,
+                           startIndex: oldest.firstIndex(of: next) ?? 0,
+                           watchStore: watchStore)
+            } label: {
+                HStack(spacing: 12) {
+                    RemoteThumbnail(url: next.thumbnailURL, width: 88, height: 50)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("次に見る：第\(pos)本目").font(.caption).foregroundStyle(.secondary)
+                        Text(next.title).font(.subheadline).lineLimit(2)
+                    }
+                    Spacer(minLength: 4)
+                    Image(systemName: "play.circle.fill").font(.title2).foregroundStyle(.tint)
+                }
+            }
+        } else if totalCount > 0 {
+            Label("すべて視聴済みです 🎉", systemImage: "checkmark.seal.fill")
+                .foregroundStyle(.green)
+        }
     }
 }
 
