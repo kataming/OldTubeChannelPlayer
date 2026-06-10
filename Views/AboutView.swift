@@ -1,0 +1,65 @@
+import SwiftUI
+
+/// アプリの説明・重要な注意事項・プライバシーポリシーを表示する情報画面。
+/// App Store 提出時、YouTube 公式アプリではないこと等を明示するために使う。
+struct AboutView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
+
+    private var appName: String {
+        (Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String)
+            ?? (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String)
+            ?? "Channel Timeline Viewer"
+    }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    Text(appName).font(.headline)
+                    Text("チャンネルの投稿動画を公開日順（古い順）に整理し、順番に視聴しやすくする補助アプリです。")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+
+                Section("重要な注意事項") {
+                    disclaimerRow("このアプリは YouTube 公式アプリではありません。")
+                    disclaimerRow("動画の再生には YouTube 公式の埋め込みプレイヤー（IFrame Player）を使用しています。")
+                    disclaimerRow("動画のダウンロード、広告の回避、バックグラウンド再生は行いません。")
+                }
+
+                Section("データの取得と再生について") {
+                    Text("動画一覧の取得には YouTube Data API v3 を使用します。再生は YouTube 公式プレイヤーをそのまま埋め込んで表示します。スクレイピングや独自プレイヤーでの再生は行いません。")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
+                if let url = ConfigLoader.privacyPolicyURL() {
+                    Section {
+                        Button {
+                            openURL(url)
+                        } label: {
+                            Label("プライバシーポリシー", systemImage: "hand.raised")
+                        }
+                    }
+                }
+            }
+            .navigationTitle("このアプリについて")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("閉じる") { dismiss() }
+                }
+            }
+        }
+    }
+
+    private func disclaimerRow(_ text: String) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: "info.circle")
+                .foregroundStyle(.secondary)
+            Text(text)
+        }
+        .font(.subheadline)
+    }
+}

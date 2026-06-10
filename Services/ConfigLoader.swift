@@ -28,6 +28,26 @@ enum ConfigLoader {
 
     static var isConfigured: Bool { youtubeAPIKey() != nil }
 
+    /// プライバシーポリシーURL。未設定（プレースホルダ/空）なら nil。
+    static func privacyPolicyURL() -> URL? {
+        let name = "PRIVACY_POLICY_URL"
+        var raw: String?
+        if let env = ProcessInfo.processInfo.environment[name], isUsable(env) {
+            raw = env
+        } else if let url = Bundle.main.url(forResource: "Config", withExtension: "plist"),
+                  let data = try? Data(contentsOf: url),
+                  let dict = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any],
+                  let value = dict[name] as? String, isUsable(value),
+                  value != "YOUR_PRIVACY_POLICY_URL_HERE" {
+            raw = value
+        }
+        guard let raw = raw?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let url = URL(string: raw), url.scheme?.hasPrefix("http") == true else {
+            return nil
+        }
+        return url
+    }
+
     private static func isUsable(_ value: String) -> Bool {
         let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
         return !trimmed.isEmpty && trimmed != placeholder

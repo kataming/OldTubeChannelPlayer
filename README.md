@@ -1,11 +1,20 @@
-# OldTube Channel Player（仮名）
+# Channel Timeline Viewer
 
-任意の YouTube チャンネルの投稿動画を **古い順** に並べ、YouTube 公式の埋め込みプレイヤーで
-順番に視聴しやすくする iPhone アプリです。
+チャンネルの投稿動画を **公開日順（古い順）** に整理し、公式の埋め込みプレイヤーで
+順番に視聴しやすくする iPhone 向けの **視聴補助アプリ**です。YouTube の代替アプリではありません。
 
-> YouTube の規約・API ポリシーに配慮した設計です。動画ファイルのダウンロードや独自プレイヤーでの
-> 直接再生、広告・再生制限の回避、スクレイピングは一切行いません。動画一覧の取得は
-> **YouTube Data API v3**、再生は **YouTube IFrame Player API（WKWebView 経由の公式埋め込み）** を使用します。
+> 内部のプロジェクト/モジュール名・GitHub リポジトリ名は開発上の都合で `OldTubeChannelPlayer` のままですが、
+> アプリの表示名・製品名・Bundle ID は `Channel Timeline Viewer` 系に変更済みです（App Store に見える名称は安全側）。
+
+## ⚠️ 重要な注意事項（ディスクレーマー）
+
+- **このアプリは YouTube 公式アプリではありません。**
+- **動画の再生には YouTube 公式の埋め込みプレイヤー（IFrame Player）を使用しています。**
+- **動画のダウンロード、広告の回避、バックグラウンド再生は行いません。**
+
+動画一覧の取得は **YouTube Data API v3**、再生は **YouTube IFrame Player API（WKWebView 経由の公式埋め込み）** を使用します。
+スクレイピング・独自プレイヤーでの再生・再生制限の回避は一切行いません。これらの注意事項はアプリ内の
+「ⓘ このアプリについて」画面にも表示されます。
 
 ---
 
@@ -181,6 +190,24 @@ OldTubeChannelPlayer/
 - IFrame の `ended` イベントが取得できない場合は、「次へ」ボタンで手動遷移してください。
 
 ---
+
+## App Store 提出準備
+
+提出を見据えた資料を [`docs/AppStore/`](docs/AppStore/) にまとめています。
+
+- [`docs/AppStore/README.md`](docs/AppStore/README.md) — 索引・プライバシーポリシーURLの設定場所
+- [`docs/AppStore/app-description.md`](docs/AppStore/app-description.md) — App Store 説明文の下書き（日本語/英語）
+- [`docs/AppStore/review-notes.md`](docs/AppStore/review-notes.md) — 審査向けメモ（公式プレイヤー使用・禁止実装なしの説明）
+- [`docs/AppStore/testflight-checklist.md`](docs/AppStore/testflight-checklist.md) — TestFlight 前チェックリスト
+- [`docs/AppStore/privacy-policy-template.md`](docs/AppStore/privacy-policy-template.md) — プライバシーポリシー雛形
+
+提出前に必要な主な設定:
+
+- **アプリ名（表示名）**: `Channel Timeline Viewer`（`project.yml` の `INFOPLIST_KEY_CFBundleDisplayName`）
+- **Bundle ID**: `com.example.channeltimelineviewer` → **自分の Apple Developer の逆ドメインに変更**
+- **DEVELOPMENT_TEAM**: `project.yml` に自分の Team ID を設定
+- **プライバシーポリシーURL**: `Resources/Config.plist` の `PRIVACY_POLICY_URL` に設定（アプリ内「ⓘ」画面に表示）。
+  App Store Connect 側にも同じURLを登録する。
 
 ## 今後の改善案
 

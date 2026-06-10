@@ -28,9 +28,13 @@ targets:
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.OldTubeChannelPlayer
+        # ↓ App Store 提出時は com.example を自分の Apple Developer の逆ドメインに置き換える
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.channeltimelineviewer
+        # 製品名(.app名)は安全な名称に。モジュール名は据え置き(コード/CI 不変)。
+        PRODUCT_NAME: ChannelTimelineViewer
+        PRODUCT_MODULE_NAME: OldTubeChannelPlayer
         TARGETED_DEVICE_FAMILY: "1"          # iPhone のみ
-        INFOPLIST_KEY_CFBundleDisplayName: OldTube
+        INFOPLIST_KEY_CFBundleDisplayName: "Channel Timeline Viewer"
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
@@ -46,7 +50,7 @@ targets:
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.OldTubeChannelPlayerTests
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.channeltimelineviewer.tests
 
 schemes:
   OldTubeChannelPlayer:

@@ -3,6 +3,7 @@ import SwiftUI
 struct ChannelInputView: View {
     @EnvironmentObject private var favoriteStore: FavoriteChannelStore
     @StateObject private var viewModel = ChannelInputViewModel()
+    @State private var showAbout = false
 
     var body: some View {
         NavigationStack {
@@ -55,10 +56,29 @@ struct ChannelInputView: View {
                         }
                     }
                 }
+
+                Section {
+                    Text("このアプリは YouTube 公式アプリではありません。再生は YouTube 公式の埋め込みプレイヤーを使用し、ダウンロード・広告回避・バックグラウンド再生は行いません。")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
-            .navigationTitle("OldTube")
+            .navigationTitle("Channel Timeline")
             .navigationDestination(item: $viewModel.resolvedChannel) { channel in
                 VideoListView(channel: channel)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showAbout = true
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .accessibilityLabel("このアプリについて")
+                }
+            }
+            .sheet(isPresented: $showAbout) {
+                AboutView()
             }
         }
     }

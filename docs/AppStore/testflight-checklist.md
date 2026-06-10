@@ -1,0 +1,42 @@
+# TestFlight 配信前チェックリスト
+
+配信・提出の前に確認する項目です。チェックが付くまで提出しないでください。
+
+## アプリ識別・署名
+- [ ] `PRODUCT_BUNDLE_IDENTIFIER` を自分の逆ドメインに変更した（`com.example.*` のままにしない）
+- [ ] `DEVELOPMENT_TEAM` に自分の Team ID を設定した
+- [ ] App Store Connect に同じ Bundle ID のアプリを作成した
+- [ ] 署名（Automatic signing 推奨）でアーカイブできる
+- [ ] `MARKETING_VERSION`（表示バージョン）と `CURRENT_PROJECT_VERSION`（ビルド番号）を設定した
+
+## 表示・名称
+- [ ] 表示名が `Channel Timeline Viewer`（YouTube/Tube を連想させない）
+- [ ] アイコンを設定した（YouTube ロゴ等の商標を使っていない）
+- [ ] スクリーンショットに公式ロゴの不正使用や「公式」と誤認させる表現がない
+
+## 機能・設定
+- [ ] `Resources/Config.plist` に**有効な** `YOUTUBE_API_KEY` を設定した（提出ビルドに含む）
+- [ ] `PRIVACY_POLICY_URL` を設定し、アプリ内「ⓘ」画面にリンクが出る
+- [ ] アプリ内「ⓘ このアプリについて」に3つの注意事項が表示される
+- [ ] チャンネル取得 → 古い順表示 → 再生 → 前後移動 → 視聴済み → お気に入り が一通り動く
+
+## ポリシー順守（禁止実装が無いこと）
+- [ ] 動画ダウンロードなし
+- [ ] スクレイピングなし（公式 API のみ）
+- [ ] 独自プレイヤー再生なし（公式 IFrame のみ）
+- [ ] 広告回避なし
+- [ ] バックグラウンド再生なし（`UIBackgroundModes` 未設定）
+
+## プライバシー（App Store Connect の「Appのプライバシー」）
+- [ ] 収集データの申告を行った（本アプリはサーバー送信なし。視聴履歴・お気に入りは端末内 UserDefaults のみ）
+- [ ] トラッキングなしを申告（ATT 不使用）
+- [ ] プライバシーポリシーURLを登録した
+
+## ビルド/CI
+- [ ] GitHub Actions の `iOS Build` が green（コンパイル＋テスト通過）
+- [ ] 実機 or シミュレーターで起動確認
+
+## 審査情報
+- [ ] `review-notes.md` の内容を App Review メモに記載
+- [ ] 連絡先情報を記入
+- [ ] （必要なら）レビュー用のサンプルチャンネルURLを記載
