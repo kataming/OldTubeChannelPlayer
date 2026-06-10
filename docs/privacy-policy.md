@@ -1,10 +1,18 @@
-# Channel Timeline Viewer プライバシーポリシー
+---
+title: Channel Timeline Viewer プライバシーポリシー
+permalink: /privacy/
+---
+
+<!--
+メンテナ向けメモ（HTMLコメント＝公開ページには表示されません）:
+公開前に [ ] を自分の情報（日付・連絡先・提供者）に置き換えること。
+公開後の URL を Resources/Config.plist の PRIVACY_POLICY_URL と App Store Connect の両方に設定する。
+これは法的助言ではありません。必要に応じて専門家に確認してください。
+-->
+
+# プライバシーポリシー
 
 最終更新日: [YYYY-MM-DD]
-
-> 公開用ポリシー。`[ ]` を自分の情報に置き換え、公開URL（GitHub Pages・自社サイト等）でホストして、
-> そのURLを `Resources/Config.plist` の `PRIVACY_POLICY_URL` と App Store Connect の両方に設定してください。
-> これは法的助言ではありません。必要に応じて専門家に確認してください。
 
 ## 1. はじめに
 Channel Timeline Viewer（以下「本アプリ」）は、チャンネルの投稿動画を公開日順（古い順）に整理し、

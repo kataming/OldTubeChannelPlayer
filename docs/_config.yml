@@ -1,0 +1,5 @@
+# GitHub Pages（main ブランチの /docs フォルダ）用の最小設定。
+# front matter を持つページ（docs/privacy-policy.md = /privacy/）をテーマ付きで描画する。
+title: Channel Timeline Viewer
+description: チャンネル動画の時系列視聴・進捗管理アプリ
+theme: jekyll-theme-minimal
