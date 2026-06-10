@@ -51,6 +51,10 @@ targets:
       base:
         GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: com.example.channeltimelineviewer.tests
+        # ホストアプリの PRODUCT_NAME を ChannelTimelineViewer に変更したため
+        # TEST_HOST/BUNDLE_LOADER を実際の .app/実行ファイル名に合わせて明示する。
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/ChannelTimelineViewer.app/ChannelTimelineViewer"
+        BUNDLE_LOADER: "$(TEST_HOST)"
 
 schemes:
   OldTubeChannelPlayer:
