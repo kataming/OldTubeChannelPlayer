@@ -248,7 +248,7 @@ python tools/verify_youtube_api.py "https://www.youtube.com/@ハンドル"
 
 - [`docs/manual-test-checklist.md`](docs/manual-test-checklist.md) — **Mac/実機での実画面確認チェックリスト**（MVP+全機能）
 - [`docs/app-store-preparation.md`](docs/app-store-preparation.md) — **公開準備の地図**（現在の名称/ID、加入後の差し替え場所、本番Config、誤push防止）
-- [`docs/privacy-policy.md`](docs/privacy-policy.md) — **プライバシーポリシー（公開用）**
+- [`docs/privacy-policy.md`](docs/privacy-policy.md) — **プライバシーポリシー**（GitHub Pages で公開 → 下記URL）
 - [`docs/app-store-description.md`](docs/app-store-description.md) — **App Store 説明文**（時系列視聴・進捗管理・学習補助として表現／日英）
 - [`docs/screenshot-copy.md`](docs/screenshot-copy.md) — **スクリーンショット用キャプション文言**
 - [`docs/testflight-checklist.md`](docs/testflight-checklist.md) — **TestFlight 実機確認チェックリスト**
@@ -268,6 +268,23 @@ python tools/verify_youtube_api.py "https://www.youtube.com/@ハンドル"
 - **DEVELOPMENT_TEAM**: `project.yml` に自分の Team ID を設定
 - **プライバシーポリシーURL**: `Resources/Config.plist` の `PRIVACY_POLICY_URL` に設定（アプリ内「ⓘ」画面に表示）。
   App Store Connect 側にも同じURLを登録する。
+
+### プライバシーポリシーの公開（GitHub Pages）
+
+プライバシーポリシーは GitHub Pages（`main` ブランチの `/docs` フォルダ）で公開しています。
+
+- **サイト**: https://kataming.github.io/ChannelTimelineViewer/
+- **プライバシーポリシー公開URL（想定）**: **https://kataming.github.io/ChannelTimelineViewer/privacy/**
+  - `docs/privacy-policy.md` の front matter（`permalink: /privacy/`）でこのパスに公開されます。
+  - 公開反映には push 後 1〜2分（Pages ビルド）かかります。
+
+公開URLの使い道：
+- `Resources/Config.plist` の `PRIVACY_POLICY_URL` に設定（アプリ内「ⓘ」画面のリンクに使用）
+- App Store Connect の「プライバシーポリシーURL」に同じURLを登録
+
+> 設定の再現方法（別アカウント等）: リポジトリ Settings → Pages → Source を「Deploy from a branch」、
+> Branch を `main` / フォルダ `/docs` に設定。`docs/_config.yml`（テーマ）が描画に使われます。
+> 公開前に `docs/privacy-policy.md` の `[ ]`（日付・連絡先・提供者）を実際の情報に置き換えてください。
 
 ### TestFlight 提出までの手順（Apple Developer Program 加入後）
 

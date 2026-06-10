@@ -61,7 +61,7 @@ cp Resources/Config.example.plist Resources/Config.plist
     <key>YOUTUBE_API_KEY</key>
     <string>（本番の YouTube Data API v3 キー）</string>
     <key>PRIVACY_POLICY_URL</key>
-    <string>https://example.com/.../privacy</string>
+    <string>https://kataming.github.io/ChannelTimelineViewer/privacy/</string>
 </dict>
 </plist>
 ```
