@@ -17,15 +17,17 @@ struct AboutView: View {
             List {
                 Section {
                     Text(appName).font(.headline)
-                    Text("チャンネルの投稿動画を公開日順（古い順）に整理し、順番に視聴しやすくする補助アプリです。")
+                    Text("チャンネルの投稿動画を公開日順（古い順）に整理し、過去動画視聴・シリーズ視聴・学習を進捗管理しながら行える視聴補助アプリです。YouTube 公式アプリの代替ではありません。")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
 
                 Section("重要な注意事項") {
                     disclaimerRow("このアプリは YouTube 公式アプリではありません。")
-                    disclaimerRow("動画の再生には YouTube 公式の埋め込みプレイヤー（IFrame Player）を使用しています。")
-                    disclaimerRow("動画のダウンロード、広告の回避、バックグラウンド再生は行いません。")
+                    disclaimerRow("動画再生には YouTube 公式の埋め込みプレイヤー（IFrame Player）を使用しています。")
+                    disclaimerRow("動画のダウンロードは行いません。")
+                    disclaimerRow("広告回避は行いません。")
+                    disclaimerRow("バックグラウンド再生は行いません。")
                 }
 
                 Section("データの取得と再生について") {
