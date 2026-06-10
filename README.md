@@ -242,10 +242,12 @@ python tools/verify_youtube_api.py "https://www.youtube.com/@ハンドル"
 
 > いずれも実機/シミュレーターでの UI 操作確認の代替です。実アプリの画面操作確認は Mac/Xcode が必要です。
 
-## App Store 提出準備
+## 実機確認・App Store 提出準備
 
-提出を見据えた資料を [`docs/AppStore/`](docs/AppStore/) にまとめています。
+提出を見据えた資料：
 
+- [`docs/manual-test-checklist.md`](docs/manual-test-checklist.md) — **Mac/実機での実画面確認チェックリスト**（MVP+全機能）
+- [`docs/app-store-preparation.md`](docs/app-store-preparation.md) — **公開準備の地図**（現在の名称/ID、加入後の差し替え場所、本番Config、誤push防止）
 - [`docs/AppStore/README.md`](docs/AppStore/README.md) — 索引・プライバシーポリシーURLの設定場所
 - [`docs/AppStore/app-description.md`](docs/AppStore/app-description.md) — App Store 説明文の下書き（日本語/英語）
 - [`docs/AppStore/review-notes.md`](docs/AppStore/review-notes.md) — 審査向けメモ（公式プレイヤー使用・禁止実装なしの説明）
@@ -259,6 +261,25 @@ python tools/verify_youtube_api.py "https://www.youtube.com/@ハンドル"
 - **DEVELOPMENT_TEAM**: `project.yml` に自分の Team ID を設定
 - **プライバシーポリシーURL**: `Resources/Config.plist` の `PRIVACY_POLICY_URL` に設定（アプリ内「ⓘ」画面に表示）。
   App Store Connect 側にも同じURLを登録する。
+
+### TestFlight 提出までの手順（Apple Developer Program 加入後）
+
+> 現状は署名なし。以下は **加入後**に行う。コードは差し替えだけで移行できる形にしてある。
+
+1. **Apple Developer Program 加入**（年額 約$99）
+2. **名称・ID を本番値に**（`project.yml`、詳細は [`docs/app-store-preparation.md`](docs/app-store-preparation.md)）
+   - `DEVELOPMENT_TEAM` に自分の Team ID（10桁）
+   - `PRODUCT_BUNDLE_IDENTIFIER` の `com.example` を自分の逆ドメインに
+   - 変更後 `xcodegen generate`
+3. **アプリアイコン 1024px** を `Resources/Assets.xcassets/AppIcon.appiconset/` に配置
+4. **本番 `Config.plist`** を作成（`YOUTUBE_API_KEY` 実キー＋`PRIVACY_POLICY_URL`）
+5. **App Store Connect でアプリ作成**（Bundle ID を一致させる）→ プライバシーポリシーURL・年齢区分等を設定
+6. **Xcode でアーカイブ**：Product → Archive（署名は Automatic signing 推奨）
+7. **Organizer から Distribute App → App Store Connect → Upload**
+8. App Store Connect の **TestFlight** タブでビルドを選び、内部テスターに配信 → 実機で動作確認
+9. 問題なければ審査提出（説明文・スクショ・[`review-notes.md`](docs/AppStore/review-notes.md) のメモを記載）
+
+実機での実画面確認は [`docs/manual-test-checklist.md`](docs/manual-test-checklist.md) に沿って行う。
 
 ## 今後の改善案
 
