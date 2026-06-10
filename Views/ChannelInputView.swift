@@ -17,7 +17,7 @@ struct ChannelInputView: View {
                     }
                 }
 
-                Section("チャンネルURL") {
+                Section {
                     TextField("https://www.youtube.com/@handle", text: $viewModel.urlText)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
@@ -35,6 +35,8 @@ struct ChannelInputView: View {
                     }
                     .disabled(viewModel.isLoading ||
                               viewModel.urlText.trimmingCharacters(in: .whitespaces).isEmpty)
+                } header: {
+                    Text("チャンネルURL")
                 } footer: {
                     Text("例: https://www.youtube.com/@handle, /channel/UC..., /c/name, /user/name")
                 }
