@@ -1,0 +1,24 @@
+# 秘密情報（実APIキー）。example のみコミットする。
+Config.plist
+Resources/Config.plist
+
+# XcodeGen が生成するプロジェクト
+*.xcodeproj
+
+# Xcode / ビルド成果物
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+
+# Swift Package Manager
+.swiftpm/
+.build/
+
+# macOS
+.DS_Store
+
+# Claude Code などのローカルツール状態
+.claude/
