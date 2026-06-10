@@ -38,6 +38,11 @@ final class WatchHistoryStore: ObservableObject {
 
     var watchedCount: Int { entries.count }
 
+    /// 指定した videoId 群のうち視聴済みの本数（チャンネル進捗の計算に使う）。
+    func watchedVideoCount(in videoIds: [String]) -> Int {
+        videoIds.reduce(0) { $0 + (isWatched($1) ? 1 : 0) }
+    }
+
     // MARK: - Persistence
 
     private func load() {

@@ -43,4 +43,14 @@ final class WatchHistoryStoreTests: XCTestCase {
         let store2 = WatchHistoryStore(defaults: defaults)
         XCTAssertTrue(store2.isWatched("v2"))
     }
+
+    func testWatchedVideoCountInList() {
+        let store = WatchHistoryStore(defaults: makeIsolatedDefaults())
+        store.markWatched("a")
+        store.markWatched("c")
+        // リスト [a,b,c,d] のうち a,c が視聴済み = 2
+        XCTAssertEqual(store.watchedVideoCount(in: ["a", "b", "c", "d"]), 2)
+        XCTAssertEqual(store.watchedVideoCount(in: ["b", "d"]), 0)
+        XCTAssertEqual(store.watchedVideoCount(in: []), 0)
+    }
 }
