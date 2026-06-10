@@ -253,6 +253,10 @@ python tools/verify_youtube_api.py "https://www.youtube.com/@ハンドル"
 - [`docs/screenshot-copy.md`](docs/screenshot-copy.md) — **スクリーンショット用キャプション文言**
 - [`docs/testflight-checklist.md`](docs/testflight-checklist.md) — **TestFlight 実機確認チェックリスト**
 - [`docs/youtube-api-key-production-settings.md`](docs/youtube-api-key-production-settings.md) — **APIキー本番制限**（iOS Bundle ID 制限・YouTube Data API v3 制限）
+- [`docs/app-icon-requirements.md`](docs/app-icon-requirements.md) — **アプリアイコン要件**（1024px/透過なし/ロゴ不使用）
+- [`docs/screenshot-production-guide.md`](docs/screenshot-production-guide.md) — **スクリーンショット作成手順**（サイズ・撮影・キャプション）
+- [`docs/app-store-connect-fields.md`](docs/app-store-connect-fields.md) — **App Store Connect 入力項目の下書き**
+- [`docs/support.md`](docs/support.md) — **サポートページ**（GitHub Pages で公開 → `/support/`）
 
 参考（初期ドラフト）:
 - [`docs/AppStore/README.md`](docs/AppStore/README.md) — 索引・プライバシーポリシーURLの設定場所
@@ -269,18 +273,19 @@ python tools/verify_youtube_api.py "https://www.youtube.com/@ハンドル"
 - **プライバシーポリシーURL**: `Resources/Config.plist` の `PRIVACY_POLICY_URL` に設定（アプリ内「ⓘ」画面に表示）。
   App Store Connect 側にも同じURLを登録する。
 
-### プライバシーポリシーの公開（GitHub Pages）
+### 公開URL（GitHub Pages）と App Store Connect 用URL候補
 
-プライバシーポリシーは GitHub Pages（`main` ブランチの `/docs` フォルダ）で公開しています。
+GitHub Pages（`main` ブランチの `/docs` フォルダ）で公開。`docs/*.md` の front matter `permalink` でパス固定。
+公開反映は push 後 1〜2分（Pages ビルド）。
 
-- **サイト**: https://kataming.github.io/ChannelTimelineViewer/
-- **プライバシーポリシー公開URL（想定）**: **https://kataming.github.io/ChannelTimelineViewer/privacy/**
-  - `docs/privacy-policy.md` の front matter（`permalink: /privacy/`）でこのパスに公開されます。
-  - 公開反映には push 後 1〜2分（Pages ビルド）かかります。
+| 用途 | URL（公開済み） | 設定先 |
+|---|---|---|
+| **プライバシーポリシーURL** | https://kataming.github.io/ChannelTimelineViewer/privacy/ | `Config.plist` の `PRIVACY_POLICY_URL` ＋ App Store Connect |
+| **サポートURL** | https://kataming.github.io/ChannelTimelineViewer/support/ | App Store Connect「サポートURL」 |
+| マーケティングURL（任意） | https://kataming.github.io/ChannelTimelineViewer/ | App Store Connect「マーケティングURL」 |
 
-公開URLの使い道：
-- `Resources/Config.plist` の `PRIVACY_POLICY_URL` に設定（アプリ内「ⓘ」画面のリンクに使用）
-- App Store Connect の「プライバシーポリシーURL」に同じURLを登録
+> サポートURLの代替候補：GitHub リポジトリURL（`https://github.com/kataming/ChannelTimelineViewer`）や
+> 問い合わせ用メール（`mailto:atamitrading@wind.ocn.ne.jp`）でも可。App Store Connect は到達可能なWebページURLを推奨。
 
 > 設定の再現方法（別アカウント等）: リポジトリ Settings → Pages → Source を「Deploy from a branch」、
 > Branch を `main` / フォルダ `/docs` に設定。`docs/_config.yml`（テーマ）が描画に使われます。
