@@ -2,6 +2,7 @@ import SwiftUI
 
 struct VideoListView: View {
     @EnvironmentObject private var watchStore: WatchHistoryStore
+    @EnvironmentObject private var progressStore: ChannelProgressStore
     @StateObject private var viewModel: VideoListViewModel
 
     init(channel: Channel) {
@@ -21,7 +22,23 @@ struct VideoListView: View {
                     .pickerStyle(.segmented)
                 }
             }
-            .task { await viewModel.loadIfNeeded() }
+            .task {
+                await viewModel.loadIfNeeded()
+                updateProgress()
+            }
+            // 再生画面で視聴済みにして戻った時などに進捗を更新する。
+            .onChange(of: watchStore.watchedCount) { _, _ in updateProgress() }
+    }
+
+    /// このチャンネルの進捗（総数・視聴済み数）を ChannelProgressStore に反映する。
+    private func updateProgress() {
+        guard !viewModel.videos.isEmpty else { return }
+        let ids = viewModel.videos.map(\.id)
+        progressStore.updateCounts(
+            channelId: viewModel.channel.id,
+            totalVideoCount: ids.count,
+            watchedVideoCount: watchStore.watchedVideoCount(in: ids)
+        )
     }
 
     @ViewBuilder
