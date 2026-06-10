@@ -85,7 +85,8 @@ struct VideoListView: View {
             Section {
                 ForEach(Array(visible.enumerated()), id: \.element.id) { index, video in
                     NavigationLink {
-                        PlayerView(videos: visible, startIndex: index, watchStore: watchStore)
+                        PlayerView(videos: visible, startIndex: index,
+                                   watchStore: watchStore, channelId: viewModel.channel.id)
                     } label: {
                         VideoRow(video: video, watched: watchStore.isWatched(video.id))
                     }
@@ -114,21 +115,32 @@ struct VideoListView: View {
         }
     }
 
+    /// 再開対象：最後に開いた動画が未視聴ならそれ、なければ最も古い未視聴動画。
+    private var resumeVideo: VideoItem? {
+        if let lastId = progressStore.progress(for: viewModel.channel.id)?.lastOpenedVideoId,
+           !watchStore.isWatched(lastId),
+           let v = viewModel.videos.first(where: { $0.id == lastId }) {
+            return v
+        }
+        return viewModel.nextUnwatched(isWatched: watchStore.isWatched)
+    }
+
     @ViewBuilder
     private var nextToWatchRow: some View {
-        if let next = viewModel.nextUnwatched(isWatched: watchStore.isWatched),
-           let pos = viewModel.nextUnwatchedPosition(isWatched: watchStore.isWatched) {
+        if let target = resumeVideo {
             let oldest = viewModel.oldestFirst()
+            let index = oldest.firstIndex(of: target) ?? 0
+            let isResume = progressStore.progress(for: viewModel.channel.id)?.lastOpenedVideoId == target.id
             NavigationLink {
-                PlayerView(videos: oldest,
-                           startIndex: oldest.firstIndex(of: next) ?? 0,
-                           watchStore: watchStore)
+                PlayerView(videos: oldest, startIndex: index,
+                           watchStore: watchStore, channelId: viewModel.channel.id)
             } label: {
                 HStack(spacing: 12) {
-                    RemoteThumbnail(url: next.thumbnailURL, width: 88, height: 50)
+                    RemoteThumbnail(url: target.thumbnailURL, width: 88, height: 50)
                     VStack(alignment: .leading, spacing: 3) {
-                        Text("次に見る：第\(pos)本目").font(.caption).foregroundStyle(.secondary)
-                        Text(next.title).font(.subheadline).lineLimit(2)
+                        Text("\(isResume ? "続きから" : "次に見る")：第\(index + 1)本目")
+                            .font(.caption).foregroundStyle(.secondary)
+                        Text(target.title).font(.subheadline).lineLimit(2)
                     }
                     Spacer(minLength: 4)
                     Image(systemName: "play.circle.fill").font(.title2).foregroundStyle(.tint)

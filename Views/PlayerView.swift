@@ -3,10 +3,13 @@ import SwiftUI
 struct PlayerView: View {
     // 視聴済み状態の変化で再描画するため EnvironmentObject でも観測する。
     @EnvironmentObject private var watchStore: WatchHistoryStore
+    @EnvironmentObject private var progressStore: ChannelProgressStore
     @StateObject private var viewModel: PlayerViewModel
     @Environment(\.openURL) private var openURL
+    private let channelId: String
 
-    init(videos: [VideoItem], startIndex: Int, watchStore: WatchHistoryStore) {
+    init(videos: [VideoItem], startIndex: Int, watchStore: WatchHistoryStore, channelId: String) {
+        self.channelId = channelId
         _viewModel = StateObject(
             wrappedValue: PlayerViewModel(videos: videos, startIndex: startIndex, watchStore: watchStore)
         )
@@ -35,6 +38,14 @@ struct PlayerView: View {
         }
         .navigationTitle("再生")
         .navigationBarTitleDisplayMode(.inline)
+        // 「最後に開いた動画」を記録（続きから見る用）。
+        .task { recordOpened() }
+        .onChange(of: viewModel.currentIndex) { _, _ in recordOpened() }
+    }
+
+    private func recordOpened() {
+        guard let video = viewModel.currentVideo else { return }
+        progressStore.recordOpened(channelId: channelId, videoId: video.id)
     }
 
     @ViewBuilder

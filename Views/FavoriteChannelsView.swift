@@ -53,6 +53,11 @@ struct FavoriteChannelsView: View {
                         Image(systemName: "chevron.right").font(.caption).foregroundStyle(.tertiary)
                     }
                     progressRow(for: favorite)
+                    if progressStore.progress(for: favorite.id)?.lastOpenedVideoId != nil {
+                        Label("続きから見る", systemImage: "play.circle.fill")
+                            .font(.caption.bold())
+                            .foregroundStyle(.tint)
+                    }
                 }
             }
         }
