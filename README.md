@@ -131,8 +131,8 @@ git push -u origin main
 - 結果・ログは GitHub の **Actions** タブで確認できます。失敗時はログにビルドエラーがそのまま出るので、
   内容を共有いただければ修正できます。
 - App Store 配布・実機配布・Apple Developer Program の設定は不要です（CIはコンパイル確認のみ）。
-- テスト用シミュレーター名（`iPhone 15`）がランナーに無い場合は、ログの「Show available simulators」を見て
-  `ios-build.yml` の `TEST_DESTINATION` を調整してください。
+- テストは実在する iPhone シミュレーターの UDID を `xcrun simctl` で**自動選択**するため、Xcode/ランナーの
+  バージョンが変わってもデバイス名の調整は不要です。
 
 > 注: `.xcodeproj` と `Config.plist` は `.gitignore` 済みでコミットされません。CI 側でその都度生成・作成します。
 > リポジトリには Swift ソース・`project.yml`・`Config.example.plist` があれば十分です。
